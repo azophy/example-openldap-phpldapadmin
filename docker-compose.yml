@@ -1,0 +1,32 @@
+# adapted from :
+# - https://github.com/Ramhm/openldap/blob/master/docker-compose.yml
+# - https://github.com/osixia/docker-phpLDAPadmin#openldap--phpldapadmin-in-1
+# 
+# Usage: `docker compose up` then go to http://localhost:8080
+#
+# Default login:
+# Login DN: "cn=admin,dc=example,dc=org"
+# Password: admin
+
+version: '3.7'
+
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: openldap
+    hostname: openldap
+    ports: 
+      - "389:389"
+      - "636:636"
+  
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    hostname: phpldapadmin
+    ports: 
+      - "8080:80"
+    environment: 
+      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_HTTPS=false
+    depends_on:
+      - openldap
