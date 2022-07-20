@@ -1,7 +1,7 @@
 # adapted from :
 # - https://github.com/Ramhm/openldap/blob/master/docker-compose.yml
 # - https://github.com/osixia/docker-phpLDAPadmin#openldap--phpldapadmin-in-1
-# 
+#
 # Usage: `docker compose up` then go to http://localhost:8080
 #
 # Default login:
@@ -15,18 +15,37 @@ services:
     image: osixia/openldap:latest
     container_name: openldap
     hostname: openldap
-    ports: 
+    ports:
       - "389:389"
       - "636:636"
-  
+
   phpldapadmin:
     image: osixia/phpldapadmin:latest
     container_name: phpldapadmin
     hostname: phpldapadmin
-    ports: 
+    ports:
       - "8080:80"
-    environment: 
+    environment:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
       - PHPLDAPADMIN_HTTPS=false
     depends_on:
       - openldap
+
+  keycloak:
+      image: quay.io/keycloak/keycloak:latest
+      ports:
+        - 8081:8080
+      command: start-dev
+      volumes:
+        - ./keycloak:/app
+      environment:
+        KEYCLOAK_ADMIN: admin
+        KEYCLOAK_ADMIN_PASSWORD: admin
+
+  web:
+      image: php:8.1-cli-alpine
+      ports:
+        - 8000:8000
+      command: php -S 0.0.0.0:8000 -t /app
+      volumes:
+        - ./web:/app
