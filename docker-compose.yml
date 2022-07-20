@@ -15,6 +15,8 @@ services:
     image: osixia/openldap:latest
     container_name: openldap
     hostname: openldap
+    volumes:
+      - ./openldap:/app
     ports:
       - "389:389"
       - "636:636"
