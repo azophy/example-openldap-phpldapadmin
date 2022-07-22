@@ -16,8 +16,18 @@ $connection = new Connection([
 ]);
 
 // Add the connection into the container:
-Container::addConnection($connection);
+//Container::addConnection($connection);
 
-$users = User::get();
+//$users = User::get();
+//print_r($users);
+//echo(count($users));
 
-print_r($users);
+//$coba1dn = 'cn=coba aja,ou=users,dc=example,dc=org';
+$coba1dn = 'uid=coba1,ou=users,dc=example,dc=org';
+if ($connection->auth()->attempt($coba1dn, 'coba1', $stayAuthenticated = true)) {
+    echo 'bind success';
+} else {
+    echo 'bind failed';
+}
+//$coba1 = User::find($coba1dn);
+
