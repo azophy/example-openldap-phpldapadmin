@@ -1,0 +1,13 @@
+{
+    "name": "azophy/experimen-opnledap-php",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Abdurrahman Shofy Adianto",
+            "email": "azophy@gmail.com"
+        }
+    ],
+    "require": {
+        "directorytree/ldaprecord": "^2.16"
+    }
+}
