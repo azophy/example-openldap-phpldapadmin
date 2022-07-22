@@ -45,9 +45,10 @@ services:
         KEYCLOAK_ADMIN_PASSWORD: admin
 
   web:
-      image: php:8.1-cli-alpine
+      build:
+        context: ./web
       ports:
         - 8000:8000
-      command: php -S 0.0.0.0:8000 -t /app
+      #command: php -S 0.0.0.0:8000 -t /app
       volumes:
         - ./web:/app
